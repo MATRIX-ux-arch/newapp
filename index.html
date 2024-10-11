@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HERE Maps Example</title>
+    <style>
+        /* Set map container to take full height */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        #mapContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <!-- Load HERE Maps API script -->
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+</head>
+<body>
+    <!-- Map container -->
+    <div id="mapContainer"></div>
+
+    <script>
+        // Replace with your own HERE Maps API key
+        const apiKey = 'JK5G1YTzQkYAs8-yqJOMgJRMBMTCNs33Jyt2q_pznMQ';
+
+        // Initialize the platform object with API key
+        const platform = new H.service.Platform({
+            apikey: apiKey
+        });
+
+        // Obtain the default map types from the platform object
+        const defaultLayers = platform.createDefaultLayers();
+
+        // Initialize a map - this map is centered over Berlin
+        const map = new H.Map(
+            document.getElementById('mapContainer'),
+            defaultLayers.vector.normal.map, {
+                center: { lat: 52.5200, lng: 13.4050 },
+                zoom: 10,
+                pixelRatio: window.devicePixelRatio || 1
+            }
+        );
+
+        // Enable the event system on the map instance
+        const mapEvents = new H.mapevents.MapEvents(map);
+
+        // Add event listener for map interactions
+        const behavior = new H.mapevents.Behavior(mapEvents);
+
+        // Create default UI components like zoom controls
+        const ui = H.ui.UI.createDefault(map, defaultLayers);
+    </script>
+</body>
+</html>
